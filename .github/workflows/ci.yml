@@ -108,6 +108,10 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
+      - name: Add execute permission to bin/rails
+        run: |
+          chmod +x bin/rails  # 実行権限を付与
+
       - name: Run tests
         env:
           RAILS_ENV: test
@@ -121,3 +125,9 @@ jobs:
           name: screenshots
           path: ${{ github.workspace }}/tmp/screenshots
           if-no-files-found: ignore
+
+      - name: Install dependencies
+        run: |
+         bundle install
+         yarn install
+ 

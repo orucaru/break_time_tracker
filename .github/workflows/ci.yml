@@ -57,9 +57,19 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+        
+      - name: Add execute permission to bin/importmap
+        run: |
+          chmod +x bin/importmap  # 実行権限を追加
+          ls -l bin/importmap  # 実行権限が付与されたか確認
 
-      - name: Scan for security vulnerabilities in JavaScript dependencies
-        run: bin/importmap audit
+      - name: Run importmap audit
+        run: bin/importmap audit  # 実行
+
+      - name: Run tests
+        run: bundle exec rails test
+
+      
 
   lint:
     runs-on: ubuntu-latest

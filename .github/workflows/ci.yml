@@ -19,11 +19,31 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
 
-      - name: Add execute permission to brakeman
-        run: chmod +x bin/brakeman
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle install
 
-      - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
+      - name: Verify permissions before adding execute permissions
+        run: ls -l bin/  # binディレクトリ内のファイルリストを確認
+
+      - name: Add execute permission to brakeman
+        run: |
+          chmod +x bin/brakeman  # 実行権限を追加
+          ls -l bin/  # 実行権限が付与されたか確認
+
+      - name: Run Brakeman using bash
+        run: |
+          bash bin/brakeman --no-pager  # bash で brakeman を実行
+
+      - name: Run tests
+        run: bundle exec rails test
+
+
+      
+     
+
+      
 
   scan_js:
     runs-on: ubuntu-latest

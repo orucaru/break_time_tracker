@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>休憩時間トラッカー</title>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload' %>
+</head>
+<body>
+  <h1>休憩時間トラッカー</h1>
+
+  <h2>休憩履歴</h2>
+  <ul>
+    <% @breaks.each do |b| %>
+      <li>
+        <strong>開始:</strong> <%= b.start_time %>
+        <strong>終了:</strong> <%= b.end_time || "未終了" %>
+        <%= form_with url: break_path(b), method: :patch, local: true do |form| %>
+          <%= form.submit "休憩終了", class: "button" %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+
+  <h2>新しい休憩を開始</h2>
+  <%= form_with url: breaks_path, method: :post, local: true do |form| %>
+    <%= form.submit "休憩開始", class: "button" %>
+  <% end %>
+
+  <%= javascript_include_tag 'application', 'data-turbo-track': 'reload' %>
+</body>
+</html>
+
+
+
+  
